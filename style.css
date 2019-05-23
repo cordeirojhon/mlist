@@ -31,14 +31,14 @@ table th:nth-child(2){border-right: 10px solid #fff; width: 25%}
 table td{border-bottom: 2px solid rgba(var(--main-color-rgb),0.3); padding-top: 20px; padding-bottom: 20px; color: #4E4E4E; font-size: 21px}
 table tr:hover td{background: rgba(var(--main-color-rgb),0.1)}
 table img{width: 58px; height: 58px; -o-object-fit: cover; object-fit: cover; border-radius: 50%; margin-right: 25px; display: inline-block; vertical-align: middle}
-.pagination ul{display: -webkit-box;display: -ms-flexbox;display: flex; list-style: none; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center}
-.pagination ul{display: -webkit-box;display: -ms-flexbox;display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center}
-.pagination li{margin: 16px 10px}
+.pagination ul{display: table}
+.pagination .vertical-align{height: 100%; display: flex; align-items: center; justify-content: center}
+.pagination li{padding: 16px 10px; display: table-cell}
 .pagination li:not(.arrow) a{border:1px solid rgb(var(--main-color-rgb)); text-align: center; width: 30px; height: 30px; border-radius: 50%; display: block; line-height: 30px; color: rgb(var(--main-color-rgb)); text-decoration: none; font-size: 21px}
 .pagination li:not(.arrow) a:hover,
 .pagination li.current a{background: rgb(var(--main-color-rgb)); color: #fff}
 .pagination li.disabled a{opacity: 0.35; pointer-events: none}
-.pagination li.arrow{margin-left: 2px; margin-right: 2px}
+.pagination li.arrow{padding-left: 2px; padding-right: 2px}
 .pagination li.arrow span{display: none}
 .pagination li.arrow a{display: block; border:8px solid transparent; height: 0; width: 0px;}
 .pagination li.arrow.left a{border-right-color: #D20A0A; border-right-width: 12px}
