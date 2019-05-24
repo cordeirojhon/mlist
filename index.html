@@ -78,7 +78,7 @@
                     html += '<tr>';
                     html += '<td>';
                     var characterId = results[character].id;
-                    html += '<a href="/character.html?id='+characterId+'" class="detail">';
+                    html += '<a href="/character/?id='+characterId+'" class="detail">';
                     var characterName = results[character].name;
                     var path = results[character].thumbnail.path;
                     html += '<picture><img src="'+path.replace('http://', 'https://')+'.'+results[character].thumbnail.extension+'" alt="'+characterName+'"></picture>';
