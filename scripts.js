@@ -4,5 +4,15 @@ function httpGet(theUrl){
     xmlHttp.send( null );
     return xmlHttp.responseText;
 }
-
-httpGet('https://gateway.marvel.com:443/v1/public/characters?limit=10&apikey=7c8026a56fb60c6ce1598a9aea4526a3');
+function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+    location.search
+        .substr(1)
+        .split("&")
+        .forEach(function (item) {
+          tmp = item.split("=");
+          if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+        });
+    return result;
+}

@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Busca Marvel - Teste Front-End </title>
-</head>
+<title>Busca Marvel - Teste Front-End </title>
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<script src="scripts.js"></script>
+</head>
 <body>
     <div class="main">
         <header>
@@ -18,83 +19,19 @@
         </header>
         <div class="main-content">
             <div class="container">
-                <form action="">
-                    <input type="search" name="s" placeholder="Nome do Personagem">
+                <form method="get">
+                    <input type="search" name="s" placeholder="Nome do Personagem" id="search">
                     <label for="s">Nome do Personagem</label>
                     <button>Buscar</button>
                 </form>
-                <section>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Personagem</th>
-                                <th class="hide-mobile">Séries</th>
-                                <th class="hide-mobile">Eventos</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <picture>
-                                        <img src="https://terrigen-cdn-dev.marvel.com/content/prod/1x/002irm_com_crd_01.jpg" alt="">
-                                    </picture>
-                                    <span class="name">Tony Stark</span>
-                                </td>
-                                <td class="hide-mobile">
-                                    Invincible Iron Man <br>
-                                    Civil War <br>
-                                    Iron Heart
-                                </td>
-                                <td class="hide-mobile">
-                                    AvX <br>
-                                    Demon in the Bottle <br>
-                                    Dynasty M
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <picture>
-                                        <img src="https://terrigen-cdn-dev.marvel.com/content/prod/1x/002irm_com_crd_01.jpg" alt="">
-                                    </picture>
-                                    <span class="name">Tony Stark</span>
-                                </td>
-                                <td class="hide-mobile">
-                                    Invincible Iron Man <br>
-                                    Civil War <br>
-                                    Iron Heart
-                                </td>
-                                <td class="hide-mobile">
-                                    AvX <br>
-                                    Demon in the Bottle <br>
-                                    Dynasty M
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <picture>
-                                        <img src="https://terrigen-cdn-dev.marvel.com/content/prod/1x/002irm_com_crd_01.jpg" alt="">
-                                    </picture>
-                                    <span class="name">Tony Stark</span>
-                                </td>
-                                <td class="hide-mobile">
-                                    Invincible Iron Man <br>
-                                    Civil War <br>
-                                    Iron Heart
-                                </td>
-                                <td class="hide-mobile">
-                                    AvX <br>
-                                    Demon in the Bottle <br>
-                                    Dynasty M
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <section id="list-heroes">
+                   
                 </section>
             </div>
         </div>
         <div class="pagination">
-            <div class="vertical-align">
-                <ul>
+            <div class="vertical-align" id="pagination">
+                <!--<ul>
                    <li class="disabled arrow left"><a href="#"><span>&laquo;</span></a></li>
                    <li class="current"><a href="#">1</a></li>
                    <li><a href="#">2</a></li>
@@ -103,9 +40,104 @@
                    <li><a href="#">5</a></li>
                    <li><a href="#">6</a></li>
                    <li class="arrow right"><a href="#"><span>&raquo;</span></a></li> 
-                </ul>
+                </ul>-->
             </div>
         </div>
+        
+        <script>
+            var searchItem = findGetParameter('s');
+            var page = findGetParameter('page');
+            var count = 10;
+            var offset = 0;
+            if (page){
+                offset = (page - 1) * count;
+            }
+            if (searchItem){
+                document.getElementById('search').value = searchItem;
+                searchItem = '&nameStartsWith='+searchItem;
+            }else{
+                searchItem = '';
+            }
+
+            var heroes = httpGet('https://gateway.marvel.com/v1/public/characters?ts=thesoer&apikey=001ac6c73378bbfff488a36141458af2&hash=72e5ed53d1398abb831c3ceec263f18b&offset='+offset+'&limit='+count+searchItem);
+            var obj = JSON.parse(heroes);
+            console.log(obj);
+            var results = obj.data.results;
+            var table = document.createElement('table');
+            if (results != ''){
+                var html = '<thead>';
+                html +='<tr>';
+                html +='<th>Personagem</th>';
+                html +='<th class="hide-mobile">Séries</th>';
+                html +='<th class="hide-mobile">Eventos</th>';
+                html +='</tr>';
+                html +='</thead>';
+                html +='<tbody>';
+                //ecma script 5
+                Object.keys(results).forEach(function(character){
+                    html += '<tr>';
+                    html += '<td>';
+                    var characterName = results[character].name;
+                    html += '<picture><img src="'+results[character].thumbnail.path+'.'+results[character].thumbnail.extension+'" alt="'+characterName+'"></picture>';
+                    html += '<span class="name">'+characterName+'</span>';
+                    html += '</td>';
+
+                    html += '<td>';
+                    var characterSeries = results[character].series.items;
+                    Object.keys(characterSeries).forEach(function(serie){
+                        if (serie <= 2){
+                            html += characterSeries[serie].name;
+                            html += '<br>';
+                            return false;
+                        }
+                    })
+                    html += '</td>';
+                    html += '<td>';
+                    var characterStories = results[character].stories.items;
+                    Object.keys(characterStories).forEach(function(story){
+                        if (story <= 2){
+                            html += characterStories[story].name;
+                            html += '<br>';
+                            return false;
+                        }
+                    })
+                    html += '</td>';
+                    html += '</tr>';
+                })
+                html +='</tbody>';
+            }else{
+                var html = '<thead>';
+                html +='<tr>';
+                if (searchItem != ''){
+                    html +='<th>Nenhum resultado encontrado para '+searchItem+'</th>';
+                }else{
+                    html +='<th>Nenhum Heroi encontrado</th>';
+                }
+                html +='</tr>';
+                html +='</thead>';
+            }
+            table.innerHTML = html;
+            document.getElementById('list-heroes').appendChild(table);
+
+            var currentPage = page != null ? page : 1;
+            var total = obj.data.total;
+            var pagination = document.createElement('ul');
+            var html = '';
+            var currentUrl = location.pathname;
+            var searchItem = findGetParameter('s');
+            var search = searchItem != null ? '&s='+searchItem : '';
+            if (total > count){
+                html += '<li id="prevpage" class="arrow left"><a href="'+currentUrl+'?page='+(currentPage - 1)+search+'"><span>&laquo;</span></a></li>';
+                var loops = total/count;
+                for(var i = (parseInt(currentPage) - 1); i < loops && i < ((parseInt(currentPage) - 1) + 6); i++){
+                    html += '<li><a href="'+currentUrl+'?page='+(i + 1)+search+'">'+(i + 1)+'</a></li>';
+                }
+                html += '<li class="arrow right"><a href="'+currentUrl+'?page='+(parseInt(currentPage) + 1)+search+'"><span>&raquo;</span></a></li> ';
+            }
+
+            pagination.innerHTML = html;
+            document.getElementById('pagination').appendChild(pagination);
+        </script>
         <footer>
         </footer>
     </div>
