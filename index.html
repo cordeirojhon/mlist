@@ -78,7 +78,8 @@
                     html += '<tr>';
                     html += '<td>';
                     var characterName = results[character].name;
-                    html += '<picture><img src="'+results[character].thumbnail.path+'.'+results[character].thumbnail.extension+'" alt="'+characterName+'"></picture>';
+                    var path = results[character].thumbnail.path;
+                    html += '<picture><img src="'+path.replace('http://', 'https://')+'.'+results[character].thumbnail.extension+'" alt="'+characterName+'"></picture>';
                     html += '<span class="name">'+characterName+'</span>';
                     html += '</td>';
 
