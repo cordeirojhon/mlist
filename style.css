@@ -20,7 +20,7 @@ header h1 span{font-weight: 300}
 .main-content form{margin-bottom: 34px; position: relative; padding-top: 20px}
 .main-content form button{display: none}
 .main-content form label{position: absolute; z-index: 1; left: 0; top: 0; color: rgb(var(--main-color-rgb)); font-size: 16px; opacity: 1}
-.main-content form input{position: relative; z-index: 2; -webkit-appearance:none; -moz-appearance:none; appearance:none; border:1px solid #A5A5A5; border-radius: 3px; font-size: 16px; padding: 5px; max-width: 400px; width: 100%; box-sizing: border-box}
+.main-content form input{position: relative; z-index: 2; -webkit-appearance:none; -moz-appearance:none; appearance:none; border:1px solid #A5A5A5; border-radius: 3px; font-size: 16px; padding: 5px; max-width: 400px; width: 100%; -webkit-box-sizing: border-box; box-sizing: border-box}
 .main-content form input:placeholder-shown + label{opacity: 0}
 table{border:0; border-collapse: collapse; border-spacing:0; width: 100%}
 table th,
@@ -29,10 +29,11 @@ table th{background: rgb(var(--main-color-rgb)); color: #ffffff; font-weight: 40
 table th:nth-child(1),
 table th:nth-child(2){border-right: 10px solid #fff; width: 25%}
 table td{border-bottom: 2px solid rgba(var(--main-color-rgb),0.3); padding-top: 20px; padding-bottom: 20px; color: #4E4E4E; font-size: 21px}
+table td a{color: inherit; text-decoration: none}
 table tr:hover td{background: rgba(var(--main-color-rgb),0.1)}
 table img{width: 58px; height: 58px; -o-object-fit: cover; object-fit: cover; border-radius: 50%; margin-right: 25px; display: inline-block; vertical-align: middle}
 .pagination ul{display: table}
-.pagination .vertical-align{height: 100%; display: flex; align-items: center; justify-content: center; position: absolute; top: 0; left: 0; width: 100%}
+.pagination .vertical-align{height: 100%; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; position: absolute; top: 0; left: 0; width: 100%}
 .pagination li{padding: 16px 10px; display: table-cell}
 .pagination li:not(.arrow) a{border:1px solid rgb(var(--main-color-rgb)); text-align: center; width: 30px; height: 30px; border-radius: 50%; display: block; line-height: 30px; color: rgb(var(--main-color-rgb)); text-decoration: none; font-size: 21px}
 .pagination li:not(.arrow) a:hover,
@@ -43,6 +44,24 @@ table img{width: 58px; height: 58px; -o-object-fit: cover; object-fit: cover; bo
 .pagination li.arrow a{display: block; border:8px solid transparent; height: 0; width: 0px;}
 .pagination li.arrow.left a{border-right-color: #D20A0A; border-right-width: 12px}
 .pagination li.arrow.right a{border-left-color: #D20A0A; border-left-width: 12px}
+
+#boxBio{max-width: 700px; margin: 0 auto}
+#boxBio header{position: relative; overflow: hidden; margin-bottom: 60px}
+#boxBio .header-background{position: absolute; top: -14px; left: -14px; width: calc(100% + 28px); height: calc(100% + 28px); z-index: 1; opacity: 0.7; -webkit-filter:blur(14px); filter:blur(14px); background-repeat: no-repeat; background-size: cover; background-position: center center}
+#boxBio header .basic-info{position: relative; z-index: 2; background: rgba(0,0,0,0.2); border-radius: 5px; border: 1px solid #fff; padding: 30px; margin: 30px; display: -webkit-box; display: -ms-flexbox; display: flex; width: calc(100% - 60px); -webkit-box-sizing: border-box; box-sizing: border-box}
+#boxBio header .title{font-size: 24px; color: #ffffff; opacity: 0.9; z-index: 2; text-align: center; margin: 0 0 30px; font-weight: 800; text-transform: uppercase}
+#boxBio .profile-image img{width: 150px; height: 150px; position: relative; z-index: 2; border-radius: 50%; margin-right: 30px; -webkit-box-shadow: 0 0 15px rgba(0,0,0,0.3); box-shadow: 0 0 15px rgba(0,0,0,0.3)}
+#boxBio header li{list-style: none}
+#boxBio header li + li{margin-top: 10px}
+#boxBio header a{color: #fff; text-decoration: none; text-transform: uppercase; font-size: 14px; font-weight: 300}
+#boxBio header a:hover{text-decoration: underline}
+#boxBio section + section{margin-top: 60px}
+#boxBio section .title{font-size: 23px; color: rgb(var(--main-color-rgb)); margin-bottom: 10px; display: block}
+#boxBio section p{font-size: 16px; margin: 10px}
+#boxBio .message{text-align: center; font-size: 20px}
+.back{text-align: center; margin: 30px 0; color:rgb(var(--main-color-rgb)); text-decoration: underline; display: block}
+.back:hover{text-decoration: none}
+
 footer{min-height: 16px; background: rgb(var(--main-color-rgb))}
 
 @media only screen and (max-width:1024px) {

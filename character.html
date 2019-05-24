@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Busca Marvel - Teste Front-End </title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<script src="scripts.js"></script>
+</head>
+<body>
+    <div class="main">
+        <header>
+            <div class="container">
+                <h1>Busca Marvel <span>Teste Front-End</span></h1>
+                <h2>Jhonatan Cordeiro</h2>
+            </div>
+        </header>
+        <div class="main-content">
+            <div class="container">
+                <div id="boxBio">
+                </div>
+                <a href="#" onclick="javascript:window.history.back();" class="back">Voltar para a listagem</a>
+            </div>
+        </div>
+        <script>
+            var id = findGetParameter('id');
+            if (id){
+                var character = httpGet('https://gateway.marvel.com/v1/public/characters/'+id+'?ts=thesoer&apikey=001ac6c73378bbfff488a36141458af2&hash=72e5ed53d1398abb831c3ceec263f18b');
+                var obj = JSON.parse(character);
+                var results = obj.data.results[0];
+                var boxContainer = document.createElement('div');
+                boxContainer.className = 'box-container';
+                var html = '';
+                console.log(results);
+                if (results != ''){
+                    var characterName = results.name;
+                    var path = results.thumbnail.path;
+
+                    html +='<header>';
+                    html +='<div class="header-background" style="background-image: url('+path.replace('http://', 'https://')+'.'+results.thumbnail.extension+')"></div>';
+                    html +='<div class="basic-info">';
+                    html +='<div class="profile-image">';
+                    html += '<picture><img src="'+path.replace('http://', 'https://')+'.'+results.thumbnail.extension+'" alt="'+characterName+'"></picture>';
+                    html +='</div>';
+                    html +='<div class="links">';
+                    html +='<h2 class="title">'+characterName+'</h2>';
+                    html +='<ul>';
+                    var urls = results.urls;
+                    Object.keys(urls).forEach(function(url){
+                        html +='<li><a href="'+urls[url].url+'" target="_blank">'+urls[url].type+'</a></li>';
+                    })
+                    html +='</ul>';
+                    html +='</div>';
+                    html +='</div>';
+                    html +='</header>';
+
+                    if (results.stories.available > 0){
+                        html +='<section>';
+                        html +='<h3 class="title">Histórias</h3>';
+                        var items = results.stories.items;
+                        Object.keys(items).forEach(function(item){
+                            html +='<p>'+items[item].name+'</p>';
+                        })
+                        html +='</section>';
+                    }
+                    if (results.series.available > 0){
+                        html +='<section>';
+                        html +='<h3 class="title">Séries</h3>';
+                        var items = results.series.items;
+                        Object.keys(items).forEach(function(item){
+                            html +='<p>'+items[item].name+'</p>';
+                        })
+                        html +='</section>';
+                    }
+                    if (results.events.available > 0){
+                        html +='<section>';
+                        html +='<h3 class="title">Eventos</h3>';
+                        var items = results.events.items;
+                        Object.keys(items).forEach(function(item){
+                            html +='<p>'+items[item].name+'</p>';
+                        })
+                        html +='</section>';
+                    }
+                    if (results.comics.available > 0){
+                        html +='<section>';
+                        html +='<h3 class="title">Comics</h3>';
+                        var items = results.comics.items;
+                        Object.keys(items).forEach(function(item){
+                            html +='<p>'+items[item].name+'</p>';
+                        })
+                        html +='</section>';
+                    }
+                }
+                boxContainer.innerHTML = html;
+                document.getElementById('boxBio').appendChild(boxContainer);
+            }else{
+                var boxContainer = document.createElement('p');
+                boxContainer.className = 'message';
+                var msg = 'Ops, nenhum personagem encontrado';
+                boxContainer.innerHTML = msg;
+                document.getElementById('boxBio').appendChild(boxContainer);
+            }
+        </script>
+        <footer>
+        </footer>
+    </div>
+</body>
+</html>
