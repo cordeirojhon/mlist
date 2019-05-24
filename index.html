@@ -78,7 +78,7 @@
                     html += '<tr>';
                     html += '<td>';
                     var characterId = results[character].id;
-                    html += '<a href="/character/?id='+characterId+'" class="detail">';
+                    html += '<a href="character.html?id='+characterId+'" class="detail">';
                     var characterName = results[character].name;
                     var path = results[character].thumbnail.path;
                     html += '<picture><img src="'+path.replace('http://', 'https://')+'.'+results[character].thumbnail.extension+'" alt="'+characterName+'"></picture>';
@@ -87,7 +87,7 @@
                     html += '</td>';
 
                     html += '<td>';
-                    html += '<a href="/character.html?id='+characterId+'" class="detail">';
+                    html += '<a href="character.html?id='+characterId+'" class="detail">';
                     var characterSeries = results[character].series.items;
                     Object.keys(characterSeries).forEach(function(serie){
                         if (serie <= 2){
@@ -99,7 +99,7 @@
                     html += '</a>';
                     html += '</td>';
                     html += '<td>';
-                    html += '<a href="/character.html?id='+characterId+'" class="detail">';
+                    html += '<a href="character.html?id='+characterId+'" class="detail">';
                     var characterStories = results[character].stories.items;
                     Object.keys(characterStories).forEach(function(story){
                         if (story <= 2){
