@@ -70,3 +70,29 @@ footer{min-height: 16px; background: rgb(var(--main-color-rgb))}
     header h2{font-size: 23px}
     header h1:after{width: 44px}
 }
+@media only screen and (max-width:768px) {
+    .hide-mobile,
+    header h2:not(.title){display: none}
+}
+@media only screen and (max-width:425px) {
+    header .container{padding-top: 12px; padding-bottom: 12px}
+    header h1{font-size: 16px}
+    header h1:after{height: 2px; width: 50px}
+    .main-content form{margin-bottom: 12px}
+    .main-content .container{padding: 0}
+    .main-content form{padding-left: 30px; padding-right: 30px}
+    .main-content form label{left: 30px}
+    table th{padding-left: 30px}
+    table td{padding: 18px 25px}
+    .pagination li{padding: 18px 10px 24px}
+    .pagination li:nth-child(n + 5):not(.arrow){display: none}
+    .pagination li.arrow{padding-left: 55px; padding-right: 55px}
+    .pagination li.arrow.left{padding-left: 30px}
+    .pagination li.arrow.right{padding-right: 30px}
+    #boxBio header{margin-bottom: 30px}
+    #boxBio .basic-info{flex-wrap: wrap; justify-content: center}
+    #boxBio .basic-info .profile-image{width: 100%; text-align: center; margin-bottom: 30px}
+    #boxBio .profile-image img{margin-right: 0}
+    #boxBio .basic-info .links{text-align: center}
+    #boxBio section{padding: 0 30px}
+}
