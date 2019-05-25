@@ -31,16 +31,6 @@
         </div>
         <div class="pagination">
             <div class="vertical-align" id="pagination">
-                <!--<ul>
-                   <li class="disabled arrow left"><a href="#"><span>&laquo;</span></a></li>
-                   <li class="current"><a href="#">1</a></li>
-                   <li><a href="#">2</a></li>
-                   <li><a href="#">3</a></li>
-                   <li><a href="#">4</a></li>
-                   <li><a href="#">5</a></li>
-                   <li><a href="#">6</a></li>
-                   <li class="arrow right"><a href="#"><span>&raquo;</span></a></li> 
-                </ul>-->
             </div>
         </div>
         
@@ -86,7 +76,7 @@
                     html += '</a>';
                     html += '</td>';
 
-                    html += '<td>';
+                    html += '<td class="hide-mobile">';
                     html += '<a href="character.html?id='+characterId+'" class="detail">';
                     var characterSeries = results[character].series.items;
                     Object.keys(characterSeries).forEach(function(serie){
@@ -98,7 +88,8 @@
                     })
                     html += '</a>';
                     html += '</td>';
-                    html += '<td>';
+                    
+                    html += '<td class="hide-mobile">';
                     html += '<a href="character.html?id='+characterId+'" class="detail">';
                     var characterStories = results[character].stories.items;
                     Object.keys(characterStories).forEach(function(story){
@@ -134,13 +125,16 @@
             var currentUrl = location.pathname;
             var searchItem = findGetParameter('s');
             var search = searchItem != null ? '&s='+searchItem : '';
+            var totalPages = total/count;
             if (total > count){
-                html += '<li id="prevpage" class="arrow left"><a href="'+currentUrl+'?page='+(currentPage - 1)+search+'"><span>&laquo;</span></a></li>';
-                var loops = total/count;
-                for(var i = (parseInt(currentPage) - 1); i < loops && i < ((parseInt(currentPage) - 1) + 6); i++){
-                    html += '<li><a href="'+currentUrl+'?page='+(i + 1)+search+'">'+(i + 1)+'</a></li>';
+                var cssClass = (currentPage == 1) ? 'disabled' : '';
+                html += '<li id="prevpage" class="arrow left '+cssClass+'"><a href="'+currentUrl+'?page='+(currentPage - 1)+search+'"><span>&laquo;</span></a></li>';
+                for(var i = (parseInt(currentPage) - 1); i < totalPages && i < ((parseInt(currentPage) - 1) + 6); i++){
+                    var cssClass = (i == parseInt(currentPage) - 1) ? 'current' : '';
+                    html += '<li class="'+cssClass+'"><a href="'+currentUrl+'?page='+(i + 1)+search+'">'+(i + 1)+'</a></li>';
                 }
-                html += '<li class="arrow right"><a href="'+currentUrl+'?page='+(parseInt(currentPage) + 1)+search+'"><span>&raquo;</span></a></li> ';
+                var cssClass = (currentPage > (totalPages - 1)) ? 'disabled' : '';
+                html += '<li class="arrow right '+cssClass+'"><a href="'+currentUrl+'?page='+(parseInt(currentPage) + 1)+search+'"><span>&raquo;</span></a></li> ';
             }
 
             pagination.innerHTML = html;
